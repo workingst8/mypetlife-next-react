@@ -1,0 +1,96 @@
+.pageContainer {
+    padding: 20px;
+  
+    .headerWithButton {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  
+    .filterSearchContainer {
+      display: flex;
+      align-items: center;
+    }
+  
+    .filterSearchContainer select,
+    .filterSearchContainer input[type='text'] {
+      margin-right: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  
+    .filterSearchContainer button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #25c3a8;
+      color: #fff;
+      cursor: pointer;
+    }
+  
+    .btn {
+      display: block;
+      margin: 50px auto 0;
+      padding: 10px 20px;
+      background-color: #25c3a8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    .myPage {
+      padding: 20px;
+  
+      .profileSection {
+        display: flex;
+        align-items: center;
+        gap: 0 20px;
+        margin-bottom: 40px;
+  
+        .profilePicture {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+  
+      .button {
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: none;
+        background-color: #25c3a8;
+        color: white;
+        cursor: pointer;
+        margin-right: 5px;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  
+    .readOnlyContent {
+      margin-top: 30px;
+    }
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .pageContainer {
+      padding: 10px;
+  
+      .filterSearchContainer select,
+      .filterSearchContainer input[type='text'] {
+        padding: 4px;
+      }
+  
+      .filterSearchContainer button {
+        padding: 4px 8px;
+      }
+    }
+  }
+  
