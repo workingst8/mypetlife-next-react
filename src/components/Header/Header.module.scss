@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding-right: 10px;
+  
+    .logo img {
+      width: 150px;
+    }
+  
+    .navigation ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+  
+      li a {
+        text-decoration: none;
+        color: #333;
+        &:hover {
+          color: #25c3a8;
+        }
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .header {
+      .logo img {
+        width: 100px;
+      }
+      .navigation ul {
+        li a {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  
