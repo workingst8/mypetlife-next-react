@@ -1,0 +1,61 @@
+.BoardListContainer {
+    margin: 20px 0 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .postItem {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+  
+  .postHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 10px;
+  
+    span:nth-of-type(1) {
+      margin-left: auto;
+    }
+  
+    span {
+      font-size: 12px;
+      color: #999;
+    }
+  }
+  
+  .postContent {
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .postDate {
+    font-size: 12px;
+    color: #999;
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .BoardListContainer {
+      margin: 10px 0 20px;
+      padding: 10px;
+      border: 0;
+  
+      .postHeader {
+        gap: 0 5px;
+      }
+  
+      .postContent {
+        font-size: 12px;
+      }
+    }
+  }
+  
