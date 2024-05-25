@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
-import styles from '../page.module.scss';
-
+import styles from '@/app/page.module.scss';
 import BoardList from '@/components/BoardList/BoardList';
 import ImageSlider from '@/components/ImageSlider/ImageSlider';
 import { Post } from '@/models/board';
 
-export default function Home() {
+export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
 
