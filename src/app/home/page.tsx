@@ -14,7 +14,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('/api/posts');
+        const response = await fetch('/api/post');
         const data = await response.json();
         if (response.ok) {
           setPosts(data.posts);

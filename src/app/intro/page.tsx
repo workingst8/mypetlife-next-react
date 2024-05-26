@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface IntroPageProps {
@@ -17,7 +16,6 @@ const logoVariants = {
 
 const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
   const [showLogo, setShowLogo] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,7 +29,6 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
     <AnimatePresence
       onExitComplete={() => {
         onComplete();
-        router.push('/home');
       }}
     >
       {showLogo && (
