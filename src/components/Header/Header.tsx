@@ -2,14 +2,19 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import styles from './Header.module.scss';
 
+import useIntroStore from '@/stores/useIntroStore';
+
 const Header: React.FC = () => {
-  const pathname = usePathname();
+
+  const introComplete = useIntroStore((state) => state.introComplete);
+
+  if (!introComplete) {
+    return null;
+  }
   
-  if (pathname !== '/') {
     return (
       <header className={styles.header}>
         <div className={styles.logo}>
@@ -29,10 +34,7 @@ const Header: React.FC = () => {
           </ul>
         </nav>
       </header>
-    );
-  }
-  
-  return null;
+    );  
 };
 
 export default Header;

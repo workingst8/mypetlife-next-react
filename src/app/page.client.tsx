@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
+import useIntroStore from '../stores/useIntroStore';
+
 import HomePage from './home/page';
 import IntroPage from './intro/page';
 
+
 export default function IndexPage() {
-  const [introComplete, setIntroComplete] = useState(false);
+  const { introComplete, setIntroComplete } = useIntroStore();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -23,9 +26,14 @@ export default function IndexPage() {
     }
   }, [introComplete, isMounted]);
 
-  if (!introComplete) {
-    return <IntroPage onComplete={() => setIntroComplete(true)} />;
-  }
+  return (
+    <>
+      {!introComplete ? (
+        <IntroPage onComplete={() => setIntroComplete(true)} />
+      ) : (
+        <HomePage />
+      )}
+    </>
+  );
 
-  return <HomePage />;
 }

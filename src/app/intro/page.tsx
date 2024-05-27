@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import useIntroStore from '@/stores/useIntroStore';
+
 interface IntroPageProps {
   onComplete: () => void;
 }
@@ -15,11 +17,13 @@ const logoVariants = {
 };
 
 const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
+  const setIntroComplete = useIntroStore((state) => state.setIntroComplete);
   const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(false);
+      setIntroComplete(true);
     }, 3000);
 
     return () => clearTimeout(timer);
