@@ -16,6 +16,8 @@ export default function Detail({ params }: DetailProps) {
         <PostDetail postId={params.id} />
         <div className={styles.btn}>
           <Link href="/community"><button>목록으로</button></Link>
+          <Link href="/edit"><button>수정</button></Link>
+          <button>삭제</button>
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           {liked ? '❤️' : '♡'} {likes}
         </button>
         <span>조회 {post.views}</span>
-        <span>작성일: {post.createdAt}</span>
+        <span>{post.createdAt}</span>
       </div>
       <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }}></div>
     </div>
