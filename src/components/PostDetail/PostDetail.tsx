@@ -1,11 +1,13 @@
 'use client'
 
+import DOMPurify from 'dompurify';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Post } from '../../models/board';
-
 import styles from './PostDetail.module.scss';
+
+import { Post } from '@/models/board';
+
 
 interface PostDetailProps {
   postId: string;
@@ -26,8 +28,13 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
       });
       const data = await res.json();
       console.log(data);
-      setPost(data.post);
-      setLikes(data.post.likes);
+      if (data.post) {
+        setPost({
+          ...data.post,
+          content: DOMPurify.sanitize(data.post.content)
+        });
+        setLikes(data.post.likes);
+      }
     }
 
     fetchPost();
@@ -73,7 +80,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
         <span>조회 {post.views}</span>
         <span>작성일: {post.createdAt}</span>
       </div>
-      <p>{post.content}</p>
+      <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }}></div>
     </div>
   );
 };
