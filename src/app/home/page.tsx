@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <div className={styles.pageContainer}>
       <ImageSlider />
-      <BoardList posts={posts} basePath="community" />
+      <BoardList posts={posts} basePath1="community" basePath2="detail" />
     </div>
   );
 }
