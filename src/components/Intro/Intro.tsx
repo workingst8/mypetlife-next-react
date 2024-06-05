@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import useIntroStore from '@/stores/useIntroStore';
 
-interface IntroPageProps {
+interface IntroProps {
   onComplete: () => void;
 }
 
@@ -16,14 +16,13 @@ const logoVariants = {
   exit: { opacity: 0 },
 };
 
-const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
+const Intro: React.FC<IntroProps> = ({ onComplete }) => {
   const setIntroComplete = useIntroStore((state) => state.setIntroComplete);
   const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(false);
-      setIntroComplete(true);
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -32,6 +31,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
   return (
     <AnimatePresence
       onExitComplete={() => {
+        setIntroComplete(true);
         onComplete();
       }}
     >
@@ -57,4 +57,4 @@ const IntroPage: React.FC<IntroPageProps> = ({ onComplete }) => {
   );
 };
 
-export default IntroPage;
+export default Intro;
