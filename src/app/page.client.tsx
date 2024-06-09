@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import useIntroStore from '../stores/useIntroStore';
 
 import HomePage from './home/page';
-import IntroPage from './intro/page';
 
+import Intro from '@/components/Intro/Intro';
 
 export default function IndexPage() {
   const { introComplete, setIntroComplete } = useIntroStore();
@@ -29,11 +29,10 @@ export default function IndexPage() {
   return (
     <>
       {!introComplete ? (
-        <IntroPage onComplete={() => setIntroComplete(true)} />
+        <Intro onComplete={() => setIntroComplete(true)} />
       ) : (
         <HomePage />
       )}
     </>
   );
-
 }

@@ -1,0 +1,252 @@
+.chat {
+  height: calc(100vh - 100px);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 830px;
+  height: calc(100vh - 200px);
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  background: #fff;
+  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.25);
+  margin: 50px auto;
+  position: relative;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: #f6f6f6;
+  padding: 20px 40px;
+  border-bottom: 1px solid #ececec;
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.72px;
+}
+
+.top img {
+  width: 38px;
+  height: 38px;
+  margin-right: 10px;
+}
+
+.top img:nth-of-type(1) {
+  background-color: #d9d9d9;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.top img:nth-of-type(2) {
+  margin-left: auto;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+.middle {
+  padding: 20px 40px;
+  height: calc(100% - 213px);
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.line {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  color: #777;
+  font-size: 14px;
+  margin: 20px auto;
+}
+
+.line::before,
+.line::after {
+  content: '';
+  flex-grow: 1;
+  border-top: 1px dashed rgba(0, 0, 0, 0.35);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+}
+
+.me {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0px 10px;
+  margin-top: 25px;
+}
+
+.me .content {
+  font-size: 14px;
+  color: #fff;
+  line-height: 130%;
+  letter-spacing: 0.52px;
+  background-color: #339dff;
+  padding: 20px;
+  border-radius: 20px;
+  border-top-right-radius: 0;
+  white-space: pre-wrap;
+}
+
+.me .time {
+  flex-shrink: 0;
+  align-self: end;
+  color: #9d9d9d;
+  font-size: 13px;
+  letter-spacing: -0.39px;
+}
+
+.me img {
+  width: 50px;
+  height: 50px;
+  background-color: #d9d9d9;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.other {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0px 10px;
+  margin-top: 25px;
+}
+
+.other .content {
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.52px;
+  background-color: #ededed;
+  padding: 20px;
+  border-radius: 20px;
+  border-top-right-radius: 0;
+  white-space: pre-wrap;
+}
+
+.other .time {
+  flex-shrink: 0;
+  align-self: end;
+  color: #9d9d9d;
+  font-size: 13px;
+  letter-spacing: -0.39px;
+}
+
+.other img {
+  width: 50px;
+  height: 50px;
+  background-color: #d9d9d9;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.bottom {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  background-color: #fafafa;
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom textarea {
+  flex: 1;
+  font-size: 16px;
+  border-radius: 13px;
+  background: #f3f3f3;
+  border: 0;
+  padding: 20px;
+}
+
+.bottom img {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 1024px) {
+  .chat {
+    height: calc(100vh - 50px);
+  }
+
+  .wrap {
+    width: 100%;
+    height: calc(100vh - 50px);
+    margin: 0 auto;
+  }
+
+  .top {
+    height: 60px;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .top img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .middle {
+    padding: 10px 20px;
+    height: calc(100% - 138px);
+  }
+
+  .middle > div {
+    flex-wrap: wrap;
+    margin-top: 5px !important;
+  }
+
+  .me .content,
+  .other .content {
+    font-size: 12px;
+  }
+
+  .other .time,
+  .me .time {
+    width: 100%;
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .me .time {
+    margin-right: 55px;
+    text-align: right;
+  }
+
+  .middle img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .middle .content {
+    flex: 1;
+    font-size: 12px;
+  }
+
+  .line {
+    margin: 10px;
+  }
+
+  .bottom {
+    padding: 10px;
+  }
+
+  .bottom img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
+
+  .bottom textarea {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
