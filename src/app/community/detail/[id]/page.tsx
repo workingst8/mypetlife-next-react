@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import styles from '@/app/page.module.scss';
 import PostDetail from '@/components/PostDetail/PostDetail';
 
-interface DetailProps {
+interface DetailPageProps {
   params: {
     id: string;
   };
 }
 
-export default function Detail({ params }: DetailProps) {
+export default function DetailPage({ params }: DetailPageProps) {
   const router = useRouter();
   return (
     <div className={styles.pageContainer}>
