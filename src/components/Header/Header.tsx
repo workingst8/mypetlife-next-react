@@ -2,12 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { Session } from "next-auth";
 
 import styles from './Header.module.scss';
 
 import useIntroStore from '@/stores/useIntroStore';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  session: Session | null;
+}
+
+const Header: React.FC<HeaderProps> = ( { session }) => {
 
   const introComplete = useIntroStore((state) => state.introComplete);
 
@@ -28,8 +33,10 @@ const Header: React.FC = () => {
               <Link href="/community">커뮤니티</Link>
             </li>
             <li>
-              <Link href="/mypage" className={styles.loginButton}>마이페이지</Link>
-              {/* <Link href="/login" className={styles.loginButton}>로그인</Link> */}
+              {session
+              ?<Link href="/mypage" className={styles.loginButton}>마이페이지</Link>
+              :<Link href="/login" className={styles.loginButton}>로그인</Link>
+              }
             </li>
           </ul>
         </nav>
