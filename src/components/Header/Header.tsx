@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Session } from "next-auth";
+import { signOut } from 'next-auth/react';
 
 import styles from './Header.module.scss';
 
@@ -34,7 +35,9 @@ const Header: React.FC<HeaderProps> = ( { session }) => {
             </li>
             <li>
               {session
-              ?<Link href="/mypage" className={styles.loginButton}>마이페이지</Link>
+              ? <button onClick={() => signOut({ redirect: true, callbackUrl: '/home' })} className={styles.loginButton}>
+              로그아웃
+            </button>
               :<Link href="/login" className={styles.loginButton}>로그인</Link>
               }
             </li>
