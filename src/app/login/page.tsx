@@ -9,8 +9,8 @@ export default function LoginPage(): React.ReactElement {
       <img 
         src="/images/login_github.png" 
         alt="login_github" 
-        style={{width: '300px', cursor:'poitner'}}
-        onClick={()=>{ signIn() }} 
+        style={{width: '300px', cursor:'pointer'}}
+        onClick={() => signIn('github', { redirect: true, callbackUrl: '/home' })}
       />
     </div>
   );
