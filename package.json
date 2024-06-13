@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/next-auth": "^3.15.0",
     "aws-sdk": "^2.1640.0",
     "bufferutil": "^4.0.8",
     "dompurify": "^3.1.4",
