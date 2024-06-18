@@ -1,5 +1,3 @@
-'use client'
-
 import DOMPurify from 'dompurify';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
