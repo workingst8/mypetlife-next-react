@@ -2,7 +2,18 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: ['s3.ap-northeast-2.amazonaws.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'mypetlifeimages.s3.amazonaws.com',
+                pathname: '/**'
+            },
+            {
+                protocol: 'https',
+                hostname: 's3.ap-northeast-2.amazonaws.com',
+                pathname: '/**'
+            }
+        ],
     },
 };
 
