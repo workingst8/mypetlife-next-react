@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
+import SwiperCore from 'swiper';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -56,10 +58,15 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ session }) => {
       console.log('Upload failed');
     }
   };
-
+  SwiperCore.use([Autoplay]);
   return (
     <div>
-      <Swiper loop={true} slidesPerView={1} className={styles.slideMain}>
+      <Swiper
+        loop={true}
+        slidesPerView={1}
+        className={styles.slideMain}
+        autoplay={{ delay: 3000 }}
+      >
         {imageUrls.map((url, index) => (
           <SwiperSlide key={index}>
             <Image src={url} alt="Slide image" width={1280} height={853} />
