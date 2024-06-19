@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ( { session }) => {
     return (
       <header className={styles.header}>
         <div className={styles.logo}>
-          <Link href="/home">
+          <Link href="/">
             <Image src="/images/logo.png" alt="Logo" width={100} height={50} />
           </Link>
         </div>
@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ( { session }) => {
             </li>
             <li>
               {session
-              ? <button onClick={() => signOut({ redirect: true, callbackUrl: '/home' })} className={styles.loginButton}>
+              ? <button onClick={() => signOut({ redirect: true, callbackUrl: '/' })} className={styles.loginButton}>
               로그아웃
             </button>
               :<Link href="/login" className={styles.loginButton}>로그인</Link>

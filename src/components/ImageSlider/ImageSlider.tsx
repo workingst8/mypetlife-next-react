@@ -1,11 +1,16 @@
 import Image from 'next/image';
+import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import styles from './ImageSlider.module.scss';
 
-const ImageSlider = () => {
+type ImageSliderProps = {
+  session: Session | null;
+};
+
+const ImageSlider: React.FC<ImageSliderProps> = ({ session }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
@@ -27,11 +32,13 @@ const ImageSlider = () => {
     const filename = encodeURIComponent(file.name);
     const res = await fetch(`/api/banner/upload?file=${filename}`);
     const data = await res.json();
-    
+
     const formData = new FormData();
-    Object.entries({ ...data.fields, file: file as Blob }).forEach(([key, value]) => {
-      formData.append(key, value as string | Blob);
-    });
+    Object.entries({ ...data.fields, file: file as Blob }).forEach(
+      ([key, value]) => {
+        formData.append(key, value as string | Blob);
+      }
+    );
 
     const uploadResult = await fetch(data.url, {
       method: 'POST',
@@ -59,7 +66,9 @@ const ImageSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+      )}
     </div>
   );
 };

@@ -1,14 +1,18 @@
 'use client';
 
+import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 
 import useIntroStore from '../stores/useIntroStore';
 
-import HomePage from './home/page';
-
+import Home from '@/components/home/Home';
 import Intro from '@/components/Intro/Intro';
 
-export default function IndexPage() {
+type IndexPageProps = {
+  session: Session | null;
+};
+
+const IndexPage: React.FC<IndexPageProps> = ({ session }) => {
   const { introComplete, setIntroComplete } = useIntroStore();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -31,8 +35,10 @@ export default function IndexPage() {
       {!introComplete ? (
         <Intro onComplete={() => setIntroComplete(true)} />
       ) : (
-        <HomePage />
+        <Home session={session} />
       )}
     </>
   );
-}
+};
+
+export default IndexPage;
