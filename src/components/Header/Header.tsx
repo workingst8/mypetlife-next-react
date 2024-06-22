@@ -2,18 +2,15 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Session } from "next-auth";
-import { signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 import styles from './Header.module.scss';
 
 import useIntroStore from '@/stores/useIntroStore';
 
-interface HeaderProps {
-  session: Session | null;
-}
+const Header: React.FC = () => {
 
-const Header: React.FC<HeaderProps> = ( { session }) => {
+  const { data: session } = useSession();
 
   const introComplete = useIntroStore((state) => state.introComplete);
 

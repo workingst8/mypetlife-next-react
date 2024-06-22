@@ -1,5 +1,6 @@
 'use client'
 
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
@@ -12,6 +13,7 @@ export default function CommunityPage() {
   const [sortBy, setSortBy] = useState('latest');
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     async function fetchPosts() {
@@ -25,11 +27,11 @@ export default function CommunityPage() {
   }, []);
 
   const handleWriteButtonClick = () => {
-    // if (isLoggedIn) {
+    if (session) {
       router.push('/community/write');
-    // } else {
-    //   alert('로그인이 필요한 기능입니다.');
-    // }
+    } else {
+      alert('로그인이 필요한 기능입니다.');
+    }
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

@@ -1,5 +1,5 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import SwiperCore from 'swiper';
 import { Autoplay } from 'swiper/modules';
@@ -8,12 +8,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import styles from './ImageSlider.module.scss';
 
-type ImageSliderProps = {
-  session: Session | null;
-};
-
-const ImageSlider: React.FC<ImageSliderProps> = ({ session }) => {
+const ImageSlider: React.FC = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchImages = async () => {

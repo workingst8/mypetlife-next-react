@@ -2,6 +2,7 @@
 
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -13,6 +14,7 @@ export default function WritePage(): React.ReactElement {
   const [content, setContent] = useState<string>('');
   const [error, setError] = useState<string>('');
   const router = useRouter();
+  const { data: session } = useSession();
 
   function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setTitle(event.target.value);
@@ -40,7 +42,7 @@ export default function WritePage(): React.ReactElement {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content: sanitizedContent }),
+        body: JSON.stringify({ title, content: sanitizedContent, author: session?.user?.name }),
       });
 
       if (!response.ok) {

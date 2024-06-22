@@ -1,4 +1,3 @@
-import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 
 import styles from '@/app/page.module.scss';
@@ -6,11 +5,7 @@ import BoardList from '@/components/BoardList/BoardList';
 import ImageSlider from '@/components/ImageSlider/ImageSlider';
 import { Post } from '@/models/board';
 
-type HomePageProps = {
-  session: Session | null;
-};
-
-const HomePage: React.FC<HomePageProps> = ({ session }) => {
+const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +33,7 @@ const HomePage: React.FC<HomePageProps> = ({ session }) => {
 
   return (
     <div className={styles.pageContainer}>
-      <ImageSlider session={session}/>
+      <ImageSlider />
       <BoardList posts={posts} basePath1="community" basePath2="detail" />
     </div>
   );
