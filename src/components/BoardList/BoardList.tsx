@@ -19,6 +19,7 @@ const BoardList: React.FC<PostsProps> = ({ posts, basePath1, basePath2 }) => {
             <div className={styles.postHeader}>
               <Link href={`/${basePath1}/${basePath2}/${post.id}`}>
                 <h3 className={styles.postTitle}>{post.title}</h3>
+              <span>{post.author}</span>
               </Link>
               <span>추천 {post.likes}</span>
               <span>조회 {post.views}</span>
