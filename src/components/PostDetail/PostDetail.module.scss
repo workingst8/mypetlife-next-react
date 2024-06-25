@@ -36,6 +36,28 @@
     padding: 10px;
     border-bottom: 1px solid #ccc;
   }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    gap: 0 10px;
+    margin-top: 30px;
+    
+    div{
+      display: flex;
+      justify-content: center;
+      gap: 0 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #25c3a8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  } 
 }
 
 .chatOptions {

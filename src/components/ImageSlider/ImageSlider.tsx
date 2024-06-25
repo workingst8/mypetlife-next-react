@@ -1,5 +1,5 @@
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import SwiperCore from 'swiper';
 import { Autoplay } from 'swiper/modules';

@@ -1,7 +1,7 @@
 'use client'
 
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 
 import styles from '@/app/page.module.scss';
@@ -31,6 +31,7 @@ export default function CommunityPage() {
       router.push('/community/write');
     } else {
       alert('로그인이 필요한 기능입니다.');
+      router.push('/login')
     }
   };
 
