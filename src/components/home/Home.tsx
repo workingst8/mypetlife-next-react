@@ -34,7 +34,8 @@ const HomePage: React.FC = () => {
   return (
     <div className={styles.pageContainer}>
       <ImageSlider />
-      <BoardList posts={posts} basePath1="community" basePath2="detail" />
+      <h2 style={{marginTop: '20px'}}>커뮤니티 최신글</h2>
+      <BoardList posts={posts.slice(0,5)} basePath1="community" basePath2="detail" />
     </div>
   );
 }
