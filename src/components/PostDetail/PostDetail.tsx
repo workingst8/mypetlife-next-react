@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -16,12 +16,13 @@ interface PostDetailProps {
 
 const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [post, setPost] = useState<Post | null>(null);
   const [showChatOption, setShowChatOption] = useState(false);
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { data: session } = useSession();
+  const pathname = usePathname() || ''; 
 
   useEffect(() => {
     async function fetchPost() {
@@ -29,31 +30,44 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
         cache: 'no-cache',
       });
       const data = await res.json();
-      console.log(data);
       if (data.post) {
         setPost({
           ...data.post,
           content: DOMPurify.sanitize(data.post.content),
         });
         setLikes(data.post.likes);
+        setLiked(data.post.likedBy.includes(session?.user?.email));
       }
     }
 
     fetchPost();
-  }, [postId]);
+  }, [postId, session?.user?.email]);
 
-  const handleChatClick = () => {
-    router.push('/chat');
-    setShowChatOption(false);
-  };
+  const toggleLike = async () => {
+    if (!session || !session.user) {
+      alert('로그인이 필요한 기능입니다.');
+      router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
+      return;
+    }
 
-  const toggleLike = () => {
-    setLiked(!liked);
-    setLikes(liked ? likes - 1 : likes + 1);
+    const newLikedStatus = !liked;
+    setLiked(newLikedStatus);
+    setLikes(newLikedStatus ? likes + 1 : likes - 1);
+  
+    await fetch(`/api/post/${post?.id}/like`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        like: newLikedStatus,
+      }),
+    });
   };
 
   if (!post) {
-    return <div>게시물을 찾을 수 없습니다</div>;
+    return <div>게시물을 찾을 수 없습니다.</div>;
   }
 
   return (
@@ -71,7 +85,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           <div className={styles.chatOptions} ref={menuRef}>
             <ul>
               <li>
-                <button onClick={handleChatClick}>채팅하기</button>
+                <button onClick={() => router.push('/chat')}>채팅하기</button>
               </li>
             </ul>
           </div>

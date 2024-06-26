@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           profilePic: document.profilePic,
           comments: document.comments || [],
           likes: document.likes,
+          likedBy: document.likedBy,
           views: document.views,
         }));
 
@@ -48,6 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           profilePic: req.body.profilePic || '',
           views: 0,
           likes: 0,
+          likedBy: [],
           comments: [],
         };
 
