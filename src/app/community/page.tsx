@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 
 import styles from '@/app/page.module.scss';
@@ -12,6 +13,8 @@ export default function CommunityPage() {
   const [sortBy, setSortBy] = useState('latest');
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
+  const { data: session } = useSession();
+  const pathname = usePathname() || ''; 
 
   useEffect(() => {
     async function fetchPosts() {
@@ -25,12 +28,14 @@ export default function CommunityPage() {
   }, []);
 
   const handleWriteButtonClick = () => {
-    // if (isLoggedIn) {
+    if (session) {
       router.push('/community/write');
-    // } else {
-    //   alert('로그인이 필요한 기능입니다.');
-    // }
+    } else {
+      alert('로그인이 필요한 기능입니다.')
+      router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
+    }
   };
+  
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value);

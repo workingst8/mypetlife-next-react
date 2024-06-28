@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 
 import styles from '@/app/page.module.scss';
@@ -7,7 +5,7 @@ import BoardList from '@/components/BoardList/BoardList';
 import ImageSlider from '@/components/ImageSlider/ImageSlider';
 import { Post } from '@/models/board';
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,7 +34,11 @@ export default function HomePage() {
   return (
     <div className={styles.pageContainer}>
       <ImageSlider />
-      <BoardList posts={posts} basePath1="community" basePath2="detail" />
+      <h2 style={{marginTop: '20px'}}>커뮤니티 최신글</h2>
+      <BoardList posts={posts.slice(0,5)} basePath1="community" basePath2="detail" />
     </div>
   );
 }
+
+
+export default HomePage;

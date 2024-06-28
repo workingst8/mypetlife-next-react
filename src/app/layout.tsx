@@ -3,12 +3,16 @@ import { ReactNode } from 'react';
 import Header from '../components/Header/Header';
 import './globals.scss';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+import AuthSession from "@/AuthSession";
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-          <Header />
-          <main>{children}</main>
+        <AuthSession>
+          <Header/>
+          {children}
+        </AuthSession>
       </body>
     </html>
   );

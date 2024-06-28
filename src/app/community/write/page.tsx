@@ -3,26 +3,28 @@
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 import styles from '@/app/page.module.scss';
 import QuillEditor from '@/components/QuillEditor/QuillEditor';
 
-const CommunityCreatePage: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [error, setError] = useState('');
+export default function WritePage(): React.ReactElement {
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const router = useRouter();
+  const { data: session } = useSession();
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setTitle(event.target.value);
-  };
+  }
 
-  const handleContentChange = (newContent: string) => {
+  function handleContentChange(newContent: string): void {
     setContent(newContent);
-  };
+  }
 
-  const handleSubmit = async () => {
+  async function handleSubmit(): Promise<void> {
     if (!title || !content) {
       setError('제목과 내용을 입력해주세요.');
       return;
@@ -40,7 +42,7 @@ const CommunityCreatePage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content: sanitizedContent }),
+        body: JSON.stringify({ title, content: sanitizedContent, author: session?.user?.name }),
       });
 
       if (!response.ok) {
@@ -50,11 +52,11 @@ const CommunityCreatePage: React.FC = () => {
       const result = await response.json();
       router.push(`/community/detail/${result.post.id}`);
     } catch (error) {
-        if (error instanceof Error) {
-            setError(error.message);
-        } else {
-            setError('알 수 없는 오류가 발생했습니다.');
-        }
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('알 수 없는 오류가 발생했습니다.');
+      }
     }
   };
 
@@ -81,6 +83,4 @@ const CommunityCreatePage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default CommunityCreatePage;
+}

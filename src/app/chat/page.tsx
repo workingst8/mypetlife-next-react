@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
@@ -14,7 +14,7 @@ interface Message {
   fromSocketId: string;
 }
 
-const Chat: React.FC = () => {
+export default function ChatPage(): React.ReactElement {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState<string>('');
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -24,7 +24,7 @@ const Chat: React.FC = () => {
     console.log("소켓 연결을 시도합니다.");
     const newSocket = io('http://localhost:3000', { path: '/api/chat' });
     setSocket(newSocket);
-  
+
     newSocket.on('receive-message', (message: Message) => {
       console.log('Received message:', message);
       setMessages(prevMessages => {
@@ -32,10 +32,10 @@ const Chat: React.FC = () => {
         return [...prevMessages, { ...message, fromMe: isFromMe }];
       });
     });
-  
+
     return () => {
         console.log("소켓 연결을 종료합니다.");
-      if (newSocket) newSocket.close();
+        if (newSocket) newSocket.close();
     };
   }, []); 
 
@@ -43,7 +43,7 @@ const Chat: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const sendMessage = () => {
+  function sendMessage() {
     const text = inputText.trim();
     if (text !== '') {
       const messageId = uuidv4(); 
@@ -53,7 +53,7 @@ const Chat: React.FC = () => {
       const ampm = hours >= 12 ? '오후' : '오전';
       const formattedHours = hours % 12 || 12;
       const timeString = `${ampm} ${formattedHours < 10 ? '0' : ''}${formattedHours}:${minutes < 10 ? '0' : ''}${minutes}`;
-  
+
       const newMessage: Message = {
         id: messageId,
         content: text,
@@ -61,14 +61,14 @@ const Chat: React.FC = () => {
         fromMe: true,
         fromSocketId: socket?.id || ''
       };
-  
+
       console.log('Sending message:', newMessage);
-  
+
       socket?.emit('new-message', newMessage);
       setInputText('');
     }
   };
-  
+
   return (
     <section className={styles.chat}>
       <div className={styles.wrap}>
@@ -107,6 +107,4 @@ const Chat: React.FC = () => {
       </div>
     </section>
   );
-};
-
-export default Chat;
+}

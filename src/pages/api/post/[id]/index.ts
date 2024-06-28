@@ -76,6 +76,7 @@ function transformPost(document: any): Post {
     profilePic: document.profilePic,
     comments: document.comments,
     likes: document.likes,
+    likedBy: document.likedBy,
     views: document.views,
   };
 }

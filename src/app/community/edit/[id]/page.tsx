@@ -52,11 +52,11 @@ function EditPage({ params }: EditPageProps): React.ReactElement {
 
   async function handleSubmit() {
     if (!title || !content) {
-      setError('Please enter both a title and content.');
+      setError('제목과 내용을 입력해주세요.');
       return;
     }
 
-    if (!window.confirm('Are you sure you want to update this post?')) {
+    if (!window.confirm('게시물을 수정하시겠습니까?')) {
       return;
     }
 

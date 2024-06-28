@@ -1,5 +1,5 @@
 import IndexPage from './page.client';
 
-export default function Page() {
+export default async function Page() {
   return <IndexPage />;
 }

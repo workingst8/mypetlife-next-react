@@ -1,16 +1,17 @@
 import { ObjectId } from 'mongodb';
 
 export interface Post {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    author: string;
-    profilePic: string;
-    comments?: Comment[];
-    likes: number;
-    views: number;
-  }
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  author: string;
+  profilePic: string;
+  comments?: Comment[];
+  likes: number;
+  likedBy: string[];
+  views: number;
+}
 
   export interface Comment {
     id: number;

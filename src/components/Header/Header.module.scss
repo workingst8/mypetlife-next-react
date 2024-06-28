@@ -14,9 +14,10 @@
       display: flex;
       gap: 20px;
   
-      li a {
+      li :is(a,button) {
         text-decoration: none;
         color: #333;
+        font-size: 15px;
         &:hover {
           color: #25c3a8;
         }
@@ -30,8 +31,8 @@
         width: 100px;
       }
       .navigation ul {
-        li a {
-          font-size: 14px;
+        li :is(a,button) {
+          font-size: 12px;
         }
       }
     }
