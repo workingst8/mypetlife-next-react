@@ -15,11 +15,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     client = await connectDB;
     const db = client.db('MyPetLife');
+    const { sortBy: querySortBy, searchTerm } = req.query;
+
+    let query = {};
+
+    if (searchTerm) {
+      query = {
+        $or: [
+          { title: new RegExp(searchTerm.toString(), 'i') },
+          { content: new RegExp(searchTerm.toString(), 'i') }
+        ]
+      };
+    }
+
+    type SortBy = 'latest' | 'likes' | 'views';
+
+    let options = {};
+    
+    if (querySortBy) {
+      const sortFields: { [key in SortBy]: number } = { latest: -1, likes: -1, views: -1 };  
+      const sortDirection = sortFields[querySortBy as SortBy] || -1; 
+      options = { sort: { [querySortBy as SortBy]: sortDirection } };
+    }
 
     switch (req.method) {
       case 'GET': {
-        const documents = await db.collection('post').find().toArray();
-
+        const documents = await db.collection('post').find(query, options).toArray();
         const posts: Post[] = documents.map(document => ({
           id: document._id.toString(),
           title: document.title,
@@ -32,7 +53,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           likedBy: document.likedBy,
           views: document.views,
         }));
-
         return res.status(200).json({ posts });
       }
       case 'POST': {
@@ -40,7 +60,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         if (!title || !content) {
           return res.status(400).json({ error: 'Missing required fields' });
         }
-
         const newPost: Omit<Post, 'id'> = {
           title,
           content,
@@ -52,7 +71,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           likedBy: [],
           comments: [],
         };
-
         const result = await db.collection('post').insertOne(newPost);
         return res.status(201).json({ post: { ...newPost, id: result.insertedId.toString() } });
       }
