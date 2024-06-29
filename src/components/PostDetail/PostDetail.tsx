@@ -78,7 +78,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           src={post.profilePic}
           alt="작성자 프로필"
           className={styles.profilePic}
-          onClick={() => setShowChatOption(!showChatOption)}
+          // onClick={() => setShowChatOption(!showChatOption)}
         />
         <span>{post.author}</span>
         {showChatOption && (

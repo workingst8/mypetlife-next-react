@@ -42,7 +42,7 @@ export default function WritePage(): React.ReactElement {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content: sanitizedContent, author: session?.user?.name }),
+        body: JSON.stringify({ title, content: sanitizedContent, author: session?.user?.name, profilePic: session?.user?.image }),
       });
 
       if (!response.ok) {
