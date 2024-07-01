@@ -94,7 +94,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           {liked ? '❤️' : '♡'} {likes}
         </button>
         <span>조회 {post.views}</span>
-        <span>{post.createdAt}</span>
+        <span>{post.createdAt.toString()}</span>
       </div>
       <div
         className={styles.content}

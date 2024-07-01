@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Post } from '@/models/board';
 import { connectDB } from '@/util/database';
 
-type Data = {
+interface Data {
   posts?: Post[];
   post?: Post;
   error?: string;
@@ -33,9 +33,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let options = {};
     
     if (querySortBy) {
-      const sortFields: { [key in SortBy]: number } = { latest: -1, likes: -1, views: -1 };  
-      const sortDirection = sortFields[querySortBy as SortBy] || -1; 
-      options = { sort: { [querySortBy as SortBy]: sortDirection } };
+      const sortFields: { [key in SortBy]: { [key: string]: number } } = { 
+        latest: { createdAt: -1 }, 
+        likes: { likes: -1 }, 
+        views: { views: -1 } 
+      };
+      options = { sort: sortFields[querySortBy as SortBy] || { createdAt: -1 } };
+    } else {
+      options = { sort: { createdAt: -1 } }; 
     }
 
     switch (req.method) {
@@ -45,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           id: document._id.toString(),
           title: document.title,
           content: document.content,
-          createdAt: document.createdAt,
+          createdAt: document.createdAt.toISOString().split('T')[0],
           author: document.author,
           profilePic: document.profilePic,
           comments: document.comments || [],
@@ -63,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const newPost: Omit<Post, 'id'> = {
           title,
           content,
-          createdAt: new Date().toISOString().split('T')[0],
+          createdAt: new Date(),
           author: req.body.author || 'Anonymous',
           profilePic: req.body.profilePic || '',
           views: 0,
