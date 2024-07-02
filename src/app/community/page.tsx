@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 import styles from '@/app/page.module.scss';
 import BoardList from '@/components/BoardList/BoardList';
+import Pagination from '@/components/Pagination/Pagination';
 import { Post } from '@/models/board';
 
 export default function CommunityPage() {
@@ -15,11 +16,16 @@ export default function CommunityPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname() || '';
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [postsPerPage] = useState(5); 
 
   async function fetchPosts() {
     const params = new URLSearchParams({
       sortBy,
       searchTerm,
+      page: currentPage.toString(),
+      limit: postsPerPage.toString(),
     });
 
     const response = await fetch(`/api/post?${params.toString()}`);
@@ -27,15 +33,17 @@ export default function CommunityPage() {
     const data = await response.json();
     if (data.posts) {
       setPosts(data.posts);
+      setTotalPosts(data.total);
     } else {
       console.error('Failed to fetch posts', data.error);
       setPosts([]);
+      setTotalPosts(0);
     }
   }
 
   useEffect(() => {
     fetchPosts();
-  }, [sortBy]);
+  }, [sortBy, currentPage, postsPerPage]);
 
   const handleWriteButtonClick = () => {
     if (session) {
@@ -58,6 +66,10 @@ export default function CommunityPage() {
 
   const handleSearchSubmit = () => {
     fetchPosts();
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -87,6 +99,7 @@ export default function CommunityPage() {
           </button>
         </div>
         <BoardList posts={posts} basePath1="community" basePath2="detail" />
+        <Pagination currentPage={currentPage} totalPosts={totalPosts} postsPerPage={postsPerPage} onPageChange={handlePageChange} />
       </div>
     </div>
   );
