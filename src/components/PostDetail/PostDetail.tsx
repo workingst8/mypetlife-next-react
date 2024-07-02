@@ -26,7 +26,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
 
   useEffect(() => {
     async function fetchPost() {
-      const res = await fetch(`http://localhost:3000/api/post/${postId}`, {
+      const res = await fetch(`/api/post/${postId}`, {
         cache: 'no-cache',
       });
       const data = await res.json();
