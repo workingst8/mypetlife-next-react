@@ -23,7 +23,7 @@ const BoardList: React.FC<PostsProps> = ({ posts, basePath1, basePath2 }) => {
               </Link>
               <span>추천 {post.likes}</span>
               <span>조회 {post.views}</span>
-              <span className={styles.postDate}>{post.createdAt}</span>
+              <span className={styles.postDate}>{post.createdAt.toString()}</span>
             </div>
           </li>
         ))}
