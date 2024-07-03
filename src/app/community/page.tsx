@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 import styles from '@/app/page.module.scss';
 import BoardList from '@/components/BoardList/BoardList';
+import Pagination from '@/components/Pagination/Pagination';
 import { Post } from '@/models/board';
 
 export default function CommunityPage() {
@@ -14,28 +15,44 @@ export default function CommunityPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
   const { data: session } = useSession();
-  const pathname = usePathname() || ''; 
+  const pathname = usePathname() || '';
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [postsPerPage] = useState(5); 
+
+  async function fetchPosts() {
+    const params = new URLSearchParams({
+      sortBy,
+      searchTerm,
+      page: currentPage.toString(),
+      limit: postsPerPage.toString(),
+    });
+
+    const response = await fetch(`/api/post?${params.toString()}`);
+
+    const data = await response.json();
+    if (data.posts) {
+      setPosts(data.posts);
+      setTotalPosts(data.total);
+    } else {
+      console.error('Failed to fetch posts', data.error);
+      setPosts([]);
+      setTotalPosts(0);
+    }
+  }
 
   useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch('/api/post');
-      const data = await response.json();
-      console.log(data);
-      setPosts(data.posts);
-    }
-
     fetchPosts();
-  }, []);
+  }, [sortBy, currentPage, postsPerPage]);
 
   const handleWriteButtonClick = () => {
     if (session) {
       router.push('/community/write');
     } else {
-      alert('로그인이 필요한 기능입니다.')
+      alert('로그인이 필요한 기능입니다.');
       router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
     }
   };
-  
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value);
@@ -47,7 +64,13 @@ export default function CommunityPage() {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchSubmit = () => {};
+  const handleSearchSubmit = () => {
+    fetchPosts();
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <div className={styles.pageContainer}>
@@ -75,7 +98,8 @@ export default function CommunityPage() {
             글쓰기
           </button>
         </div>
-        <BoardList posts={posts} basePath1="community" basePath2='detail' />
+        <BoardList posts={posts} basePath1="community" basePath2="detail" />
+        <Pagination currentPage={currentPage} totalPosts={totalPosts} postsPerPage={postsPerPage} onPageChange={handlePageChange} />
       </div>
     </div>
   );

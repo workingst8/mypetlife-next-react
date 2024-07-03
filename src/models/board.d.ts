@@ -4,7 +4,7 @@ export interface Post {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
+  createdAt: Date;
   author: string;
   profilePic: string;
   comments?: Comment[];

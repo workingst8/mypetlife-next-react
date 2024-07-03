@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { connectDB } from '@/util/database';
 
-type Data = {
+interface Data {
   message?: string;
   error?: string;
 };

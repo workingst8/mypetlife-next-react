@@ -96,6 +96,23 @@
   .readOnlyContent {
     margin-top: 30px;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0 10px;
+
+    button {
+      font-size: 18px;
+      &:disabled {
+        color: #25c3a8;
+        font-weight: 700;
+      }
+      &:not(:disabled) {
+        color: #999;
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -118,6 +135,12 @@
     .btn {
       button {
         padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+
+    .pagination {
+      button {
         font-size: 12px;
       }
     }

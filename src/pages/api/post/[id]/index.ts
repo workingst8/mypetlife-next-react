@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Post } from '@/models/board';
 import { connectDB } from '@/util/database';
 
-type Data = {
+interface Data {
   post?: Post;
   error?: string;
   message?:string;
@@ -71,7 +71,7 @@ function transformPost(document: any): Post {
     id: document._id.toString(),
     title: document.title,
     content: document.content,
-    createdAt: document.createdAt,
+    createdAt: document.createdAt.toISOString().split('T')[0],
     author: document.author,
     profilePic: document.profilePic,
     comments: document.comments,

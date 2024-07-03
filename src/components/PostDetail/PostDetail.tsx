@@ -26,7 +26,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
 
   useEffect(() => {
     async function fetchPost() {
-      const res = await fetch(`http://localhost:3000/api/post/${postId}`, {
+      const res = await fetch(`/api/post/${postId}`, {
         cache: 'no-cache',
       });
       const data = await res.json();
@@ -78,7 +78,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           src={post.profilePic}
           alt="작성자 프로필"
           className={styles.profilePic}
-          onClick={() => setShowChatOption(!showChatOption)}
+          // onClick={() => setShowChatOption(!showChatOption)}
         />
         <span>{post.author}</span>
         {showChatOption && (
@@ -94,7 +94,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           {liked ? '❤️' : '♡'} {likes}
         </button>
         <span>조회 {post.views}</span>
-        <span>{post.createdAt}</span>
+        <span>{post.createdAt.toString()}</span>
       </div>
       <div
         className={styles.content}
